@@ -1,0 +1,30 @@
+### POST request to blog
+POST http://localhost:8080/api/articles
+Content-Type: application/json
+
+{
+  "title": "blog title",
+  "content": "blog content"
+}
+
+
+### GET blog article
+GET http://localhost:8080/api/articles
+
+
+### GET blog article by id
+GET http://localhost:8080/api/articles/9
+
+
+### DELETE blog article by id
+DELETE http://localhost:8080/api/articles/8
+
+
+### PUT blog article by id
+PUT http://localhost:8080/api/articles/100
+Content-Type: application/json
+
+{
+  "title": "blog title 18 new",
+  "content": "blog content 18 new"
+}

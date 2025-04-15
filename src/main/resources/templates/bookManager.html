@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+</head>
+<body>
+<h3>Enter book information</h3>
+<form th:action="@{/books}" method="post">
+    <table>
+        <tr>
+            <td>id</td>
+            <td><input type="text" id="id" name="id"></td>
+        </tr>
+        <tr>
+            <td>name</td>
+            <td><input type="text" id="name" name="name"></td>
+        </tr>
+        <tr>
+            <td>author</td>
+            <td><input type="text" id="author" name="author"></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Add</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+<h3>List of registered books</h3>
+<ul>
+    <li th:each="book:${bookList}">
+        <a th:href="@{/books/{id}(id = ${book.id})}"><span th:text="${book.id}"></span></a>
+    </li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example Page</title>
+</head>
+<body>
+<h1>Practice Thymeleaf</h1>
+<p th:text="${#temporals.format(todayDate,'YYYY-MM-dd')}"></p> <!-- 2025-04-09 -->
+
+<div th:object="${person}">  <!-- assign person object -->
+    <p th:text="|Name : *{name}|"></p>  <!-- Name : display name -->
+    <p th:text="|Age : *{age}|"></p>   <!-- Age : display age  -->
+    <p>Hobbies : </p>
+    <ul th:each="hobby : *{hobbies}"> <!-- loop hobbies -->
+        <li th:text="${hobby}"></li>      <!-- display hobby -->
+        <span th:if="${hobby == 'travelling'}">(favorite hobby)</span>   <!-- for specific hobby, display with (favorite hobby) -->
+    </ul>
+</div>
+
+<a th:href="@{/api/articles/{id}(id=${person.id})}">view article</a>   <!-- link to single post with id-->
+</body>
+</html>

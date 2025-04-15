@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Blog Articles</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="p-5 mb-5 text-center bg-light">
+  <h1 class="mb-3">My Blog</h1>
+  <h4 class="mb-4">Welcome to blog</h4>
+</div>
+
+<div class="container">
+    <button type="button" id="create-btn"
+            th:onclick="|location.href='@{/new-article}'|"
+            class="btn btn-secondary btn-sm mb-3">Add</button>
+    <div class="row-6" th:each="item : ${articles}">  <!-- loop articles, assign into item variable -->
+        <div class="card">
+            <div class="card-header" th:text="${item.id}">  <!-- display id from item -->
+            </div>
+            <div class="card-body">
+                <h5 class="card-title" th:text="${item.title}"></h5> <!-- display title from item -->
+                <p class="card-text" th:text="${item.content}" ></p> <!-- display content from item -->
+                <a th:href="@{/articles/{id}(id=${item.id})}" class="btn btn-primary">view</a>
+            </div>
+        </div>
+        <br>
+    </div>
+    <form th:action="@{/logOutPage}" method="post">
+        <button type="submit" class="btn btn-secondary">Log Out</button>
+    </form>
+</div>
+</body>
+</html>
