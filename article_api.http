@@ -13,7 +13,7 @@ GET http://localhost:8080/api/articles
 
 
 ### GET blog article by id
-GET http://localhost:8080/api/articles/9
+GET http://localhost:8080/api/articles/22
 
 
 ### DELETE blog article by id
@@ -28,3 +28,29 @@ Content-Type: application/json
   "title": "blog title 18 new",
   "content": "blog content 18 new"
 }
+
+### POST new comment
+POST http://localhost:8080/api/articles/22/comments
+Content-Type: application/json
+
+{
+  "body": "comment1"
+}
+
+### GET comment by id
+GET http://localhost:8080/api/comments/100
+
+
+### PUT comment
+PUT http://localhost:8080/api/comments/396
+Content-Type: application/json
+
+{
+  "body": "comment new"
+}
+
+### DELETE comment
+DELETE http://localhost:8080/api/comments/397
+
+### GET article by id
+GET http://localhost:8080/api/articles/22/comments

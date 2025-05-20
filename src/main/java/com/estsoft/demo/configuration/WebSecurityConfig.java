@@ -13,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfig {
     @Bean
     public WebSecurityCustomizer configure() {      //Disable Spring Security Features
-        return web -> web.ignoring().requestMatchers("/static/**","books/**","/api/external","/test/**","/articles/**");
+        return web -> web.ignoring().requestMatchers("/static/**","books/**","/test/**","/articles/**","/api/**","/members/**");
     }
 
     //Configure web-based security for specific HTTP requests

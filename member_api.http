@@ -2,14 +2,18 @@
 GET http://localhost:8080/members
 
 ###
-GET http://localhost:8080/members/3
+GET http://localhost:8080/members/21
 
 ###
 POST http://localhost:8080/members
 Content-Type: application/json
 
 {
-  "name": "name6"
+  "name": "name6",
+  "team": {
+    "id": 1,
+    "name": "FC바르셀로나"
+  }
 }
 
 ###

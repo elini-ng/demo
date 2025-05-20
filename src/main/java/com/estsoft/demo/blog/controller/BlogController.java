@@ -1,9 +1,8 @@
 package com.estsoft.demo.blog.controller;
 
 import com.estsoft.demo.blog.domain.Article;
-import com.estsoft.demo.blog.dto.AddArticleRequest;
-import com.estsoft.demo.blog.dto.ArticleResponse;
-import com.estsoft.demo.blog.dto.UpdateArticleRequest;
+import com.estsoft.demo.blog.domain.Comment;
+import com.estsoft.demo.blog.dto.*;
 import com.estsoft.demo.blog.service.BlogService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,8 +34,8 @@ public class BlogController {
     public ResponseEntity<List<ArticleResponse>> getAllArticles() {
         List<Article> articles = blogService.getAllArticles();
 
-        List<ArticleResponse> responseBody = articles.stream().map(article ->
-                new ArticleResponse(article.getId(), article.getTitle(), article.getContent()))
+        List<ArticleResponse> responseBody = articles.stream()
+                .map(ArticleResponse::new)
                 .toList();
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -67,11 +66,37 @@ public class BlogController {
         return ResponseEntity.ok(response);
     }
 
-    //IllegalArgumentException 500x > 4xx
-    @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handleIllegalArgumentException(IllegalArgumentException ex) {
-        return ex.getMessage();
+    @PostMapping("/api/articles/{articleId}/comments")
+    public ResponseEntity<CommentResponse> saveComment (@PathVariable("articleId") Long articleId,
+                                                        @RequestBody CommentRequest request) {
+        Comment comment = blogService.saveComment(articleId, request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new CommentResponse(comment));
+    }
+
+    @GetMapping("/api/comments/{commentId}")
+    public ResponseEntity<CommentResponse> getComment(@PathVariable("commentId") Long commentId) {
+        Comment comment = blogService.getComment(commentId);
+        return ResponseEntity.ok(new CommentResponse(comment));
+    }
+
+    @PutMapping("/api/comments/{commentId}")
+    public ResponseEntity<CommentResponse> updateComment (@PathVariable("commentId") Long commentId,
+                                                          @RequestBody CommentRequest request) {
+        Comment comment = blogService.updateComment(commentId, request);
+        return ResponseEntity.ok(new CommentResponse(comment));
+    }
+
+    @DeleteMapping("/api/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment (@PathVariable("commentId") Long commentId) {
+        blogService.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/api/articles/{articleId}/comments")
+    public ResponseEntity<ArticleCommentResponse> getArticleWithComment (@PathVariable("articleId") Long articleId) {
+        Article article = blogService.getArticleById(articleId);
+        return ResponseEntity.ok(new ArticleCommentResponse(article));
     }
 
 }

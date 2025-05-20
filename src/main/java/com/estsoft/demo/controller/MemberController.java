@@ -1,5 +1,6 @@
 package com.estsoft.demo.controller;
 
+import com.estsoft.demo.dto.MemberRequest;
 import com.estsoft.demo.repository.Member;
 import com.estsoft.demo.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +25,16 @@ public class MemberController {
 
     @ResponseBody
     @GetMapping("/members/{id}")
-    public Member showMemberById(@PathVariable Long id) {
-        return memberService.getMemberById(id);
+    public MemberDTO showMemberById(@PathVariable("id") Long id) {
+        Member member= memberService.getMemberById(id);
+        return new MemberDTO(member);
     }
 
     @ResponseBody
     @PostMapping("/members")
-    public Member addMember(@RequestBody Member member) {
-        return memberService.insertMember(member);
+    public MemberDTO addMember(@RequestBody MemberRequest member) {
+        Member savedMember = memberService.insertMember(member.toEntity());
+        return new MemberDTO(savedMember);
     }
 
     @ResponseBody
@@ -44,8 +47,11 @@ public class MemberController {
     //GET /search/members?name={name}
     @ResponseBody
     @GetMapping("/search/members")
-    public List<Member> getMemberByName(@RequestParam("name") String name) {
-        return memberService.getMemberByName(name);
+    public List<MemberDTO> getMemberByName(@RequestParam("name") String name) {
+        List<Member> memberList = memberService.getMemberByName(name);
+        return memberList.stream()
+                .map(member -> new MemberDTO(member))
+                .toList();
     }
 
 }

@@ -22,6 +22,11 @@ public class Member {
     @JoinColumn(name = "team_id")
     private Team team;
 
-    public Member(Object o, String name1) {
+    //public Member(Object o, String name1) {
+    //}
+
+    public Member(String name, Team team) {
+        this.name = name;
+        this.team = team;
     }
 }
